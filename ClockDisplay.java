@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class ClockDisplay {
 
-    private String displayString;
+    private String displayString;   //What is displayed when the program is run
     private NumberDisplay hour = new NumberDisplay(24);
     private NumberDisplay minute = new NumberDisplay(60);
     private NumberDisplay second = new NumberDisplay(60);
@@ -27,7 +27,7 @@ public class ClockDisplay {
 
     }
 
-    public void timeTick() {
+    public void timeTick() {    //Runs the increment method for the seconds counter and only increments the minute counter or hour counter if neccessary
         second.increment();
         if (second.getValue() == 0) {
             minute.increment();
@@ -39,40 +39,39 @@ public class ClockDisplay {
     }
 
     public void setTime() {
-
+        //Gets the current time
         Calendar rightNow = Calendar.getInstance();
         int hourNow = rightNow.get(Calendar.HOUR_OF_DAY);
         int minuteNow = rightNow.get(Calendar.MINUTE);
         int secondNow = rightNow.get(Calendar.SECOND);
+        //Sets the time values to the current time
         hour.setValue(hourNow);
         minute.setValue(minuteNow);
         second.setValue(secondNow);
-        DecimalFormat formatter = new DecimalFormat("00");
-        String hourFormatted = formatter.format(hourNow);
-        String minuteFormatted = formatter.format(minuteNow);
-        String secondFormatted = formatter.format(secondNow);
 
     }
 
     public String getTime() {
+        //Get the current time from the getValue method
         int newHour = hour.getValue();
         int newMinute = minute.getValue();
         int newSecond = second.getValue();
+        //Formats the time to be 2 digits even if only 1 digit would be required
+        //The hour is only formatted if the clock is a 24 hour clock
         DecimalFormat formatter = new DecimalFormat("00");
         //String hourFormatted = formatter.format(newHour);
         String minuteFormatted = formatter.format(newMinute);
         String secondFormatted = formatter.format(newSecond);
-        if(newHour > 12){
-            displayString = (newHour-12) + ":" + minuteFormatted + ":" + secondFormatted + " PM";
-        }
-        else{
+        if (newHour > 12) {
+            displayString = (newHour - 12) + ":" + minuteFormatted + ":" + secondFormatted + " PM";
+        } else {
             displayString = newHour + ":" + minuteFormatted + ":" + secondFormatted + " AM";
         }
         return displayString;
     }
 
     public void updateDisplay() {
-
+        //Gets time, displays result
         getTime();
         System.out.println(displayString);
     }
